@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 
 const airqSchema = new Schema({
     qualityIndex: {
-        type: String,
+        type: Number,
         required: true
     },
     deviceId: {
