@@ -3,13 +3,13 @@ const app = express();
 
 const routes = require('./routes/api');
 
-const axios = require('axios');
+
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config();
 
 const cors = require('cors');
-const User = require('./models/user-model');
+
 
 //Connect to DB
 mongoose.connect(process.env.DB_CONNECTION_STRING,
