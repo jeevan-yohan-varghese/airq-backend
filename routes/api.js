@@ -61,6 +61,42 @@ router.post('/newData', verifyApiKey, (req, res, next) => {
 
 });
 
+//get data
+//Get Persons
+router.get('/getDeviceData', verifyApiKey, (req, res, next) => {
+    if (!req.query.deviceId) {
+        return res.status(400).json({ success: false, msg: "No device id found" });
+    }
+    AirqData.find({ deviceId: req.query.deviceId }).then((currentDeviceData) => {
+        if (!currentDeviceData) {
+            console.log(err)
+            return res.status(500).json({ success: false, msg: "No data found" });
+        }
+
+        res.json({ success: true, data: currentDeviceData });
+    });
+});
+
+router.get('/getLocationData', verifyApiKey, (req, res, next) => {
+    if (!req.query.lat || !req.query.lng) {
+        return res.status(400).json({ success: false, msg: "Invalid latitude or longitude" });
+    }
+    AirqData.aggregate([{
+        $geoNear: {
+            near: {
+                type: 'Point',
+                coordinates: [parseFloat(req.query.lng), parseFloat(req.query.lat)]
+            },
+            spherical: true,
+            maxDistance: 100000,
+            distanceField: "dist.calculated"
+        }
+    }]).then(function (results) {
+        res.json({ success: true, data: results });
+    })
+
+});
+
 
 
 module.exports = router;
