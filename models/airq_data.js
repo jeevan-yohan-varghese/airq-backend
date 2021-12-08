@@ -27,6 +27,10 @@ const airqSchema = new Schema({
     timestamp:{
         type:String,
         required:true
+    },
+    colorCode:{
+        type:String,
+        required:true
     }
 })
 
