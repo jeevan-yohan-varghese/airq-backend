@@ -1,6 +1,17 @@
 const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
+const GeoSchema = new Schema({
+    type: {
+        type: String,
+        default: "Point"
+
+    },
+    coordinates: {
+        type: [Number],
+        index: "2dsphere"
+    }
+});
 
 const airqSchema = new Schema({
     qualityIndex: {
@@ -12,25 +23,18 @@ const airqSchema = new Schema({
         required: true
     },
 
-    latitude: {
-        type: Number,
-        required: true
-    },
-    longitude: {
-        type: Number,
-        required: true
-    },
+    geometry: GeoSchema,
     safety: {
         type: String,
         required: true
     },
-    timestamp:{
-        type:String,
-        required:true
+    timestamp: {
+        type: String,
+        required: true
     },
-    colorCode:{
-        type:String,
-        required:true
+    colorCode: {
+        type: String,
+        required: true
     }
 })
 

@@ -41,8 +41,7 @@ router.post('/newData', verifyApiKey, (req, res, next) => {
     const newAirqData = new AirqData({
         qualityIndex: req.body.qualityIndex,
         deviceId: req.body.deviceId,
-        latitude: req.body.latitude,
-        longitude: req.body.longitude,
+        geometry: { type: "Point", coordinates: [req.body.longitude, req.body.latitude] },
         timestamp: req.body.timestamp,
         safety: safety,
         colorCode: colorCode
